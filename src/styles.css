@@ -221,6 +221,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .badges span { padding: 6px 8px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 999px; color: var(--silver); background: rgba(255, 255, 255, 0.035); font-size: 11px; font-weight: 700; }
 .badges .initial-rent-badge { border-color: rgba(242, 185, 0, 0.34); color: var(--gold); background: rgba(242, 185, 0, 0.09); }
 .slot-list { display: grid; gap: 0; }
+.platform-slot-group { display: grid; }
+.platform-slot-group + .platform-slot-group { margin-top: 8px; }
+.platform-slot-heading {
+  padding: 8px 0 3px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.platform-slot-group + .platform-slot-group .platform-slot-heading {
+  padding-top: 12px;
+  border-top: 1px solid rgba(242, 185, 0, 0.2);
+}
 .slot-row { min-height: 52px; display: grid; grid-template-columns: minmax(0, 1fr) 178px; gap: 18px; align-items: center; padding: 6px 0; border-top: 1px solid var(--line-soft); }
 .slot-row::after { content: ""; position: absolute; }
 .slot-status { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
