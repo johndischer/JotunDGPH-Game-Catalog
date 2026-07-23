@@ -96,7 +96,6 @@ function normalizeStatusText(raw) {
 }
 
 function normalizeGame(raw, index) {
-  const id = String(firstValue(raw, ["id", "gameId", "gameID", "Game ID", "GameId"], `JG-${String(index + 1).padStart(4, "0")}`));
   const title = String(firstValue(raw, ["title", "gameTitle", "name", "Game Title", "Game"], `Untitled Game ${index + 1}`));
   const categories = arrayValue(firstValue(raw, ["category", "categories", "plan", "eligibility", "Category", "Plan"], "Classic"));
   const coverFilename = String(firstValue(raw, ["coverFilename", "cover", "image", "coverFile", "Cover Filename"], "")).trim();
@@ -382,7 +381,6 @@ function createInquiry(game, slotName, platform = "") {
   const lines = [
     "Hi JotunDGPH! I would like to inquire about this game:",
     `Game: ${game.title}`,
-    `Game ID: ${game.id}`,
     `Platform: ${inquiryPlatformLabel(game, platform)}`,
     `Category: ${game.category.join(" / ")}`,
     `Slot: ${slotName}`
