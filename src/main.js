@@ -448,7 +448,6 @@ function gameCard(game) {
       <section class="platform-card" aria-label="${escapeHtml(platform)} availability">
         <header class="platform-card-header">
           <span class="platform-name">${escapeHtml(platform)}</span>
-          <span class="platform-caption">Digital rental slots</span>
         </header>
         <div class="platform-slot-grid ${rows.length === 1 ? "single-slot" : ""}">
           ${rows.map(([name, slot]) => `
