@@ -435,29 +435,34 @@ function slotEntriesForPlatform(game, platform) {
   const trophy = platformAvailability.trophy || normalizeStatus("unavailable");
   const nonTrophy = platformAvailability.nonTrophy || normalizeStatus("unavailable");
 
-  if (state.filters.slot === "trophy") return [["Trophy", trophy]];
-  if (state.filters.slot === "nonTrophy") return [["Non-Trophy", nonTrophy]];
-  return [["Trophy", trophy], ["Non-Trophy", nonTrophy]];
+  if (state.filters.slot === "trophy") return [["Trophy Slot", trophy]];
+  if (state.filters.slot === "nonTrophy") return [["Non-Trophy Slot", nonTrophy]];
+  return [["Trophy Slot", trophy], ["Non-Trophy Slot", nonTrophy]];
 }
 
 function gameCard(game) {
   const platforms = selectedPlatformsForGame(game);
-  const showPlatformHeadings = state.filters.platform === "all" && platforms.length > 1;
-
   const platformGroups = platforms.map((platform) => {
     const rows = slotEntriesForPlatform(game, platform);
     return `
-      <section class="platform-slot-group" aria-label="${escapeHtml(platform)} availability">
-        ${showPlatformHeadings ? `<div class="platform-slot-heading">${escapeHtml(platform)}</div>` : ""}
-        ${rows.map(([name, slot]) => `
-          <div class="slot-row">
-            <div class="slot-status">
-              <strong>${escapeHtml(name)}</strong>
-              <span class="status status-${slot.status.replace(/\s+/g, "-")}"><i></i>${escapeHtml(slotLabel(slot))}</span>
+      <section class="platform-card" aria-label="${escapeHtml(platform)} availability">
+        <header class="platform-card-header">
+          <span class="platform-name">${escapeHtml(platform)}</span>
+          <span class="platform-caption">Digital rental slots</span>
+        </header>
+        <div class="platform-slot-grid ${rows.length === 1 ? "single-slot" : ""}">
+          ${rows.map(([name, slot]) => `
+            <div class="slot-card">
+              <div class="slot-card-topline">
+                <strong class="slot-name">${escapeHtml(name)}</strong>
+                <span class="status status-${slot.status.replace(/\s+/g, "-")}"><i></i>${escapeHtml(slotLabel(slot))}</span>
+              </div>
+              <div class="slot-card-action">
+                ${actionForSlot(game, slot, name, platform)}
+              </div>
             </div>
-            ${actionForSlot(game, slot, name, platform)}
-          </div>
-        `).join("")}
+          `).join("")}
+        </div>
       </section>`;
   }).join("");
 
@@ -469,7 +474,7 @@ function gameCard(game) {
       </div>
       <div class="game-info">
         <div class="title-row">
-          <div>
+          <div class="title-copy">
             <h2>${escapeHtml(game.title)}</h2>
             <p class="game-id">${escapeHtml(game.id)}</p>
           </div>
@@ -481,7 +486,7 @@ function gameCard(game) {
               : ""}
           </div>
         </div>
-        <div class="slot-list">
+        <div class="availability-grid availability-grid-${platforms.length}">
           ${platformGroups}
         </div>
       </div>
