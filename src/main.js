@@ -417,10 +417,10 @@ function waitlistLink(game, slotName, platform = "") {
 
 function actionForSlot(game, slot, slotName, platform) {
   if (slot.status === "available") {
-    return `<button class="slot-action button button-gold" data-action="message" data-game-id="${escapeHtml(game.id)}" data-slot="${escapeHtml(slotName)}" data-platform="${escapeHtml(platform)}">Message Now</button>`;
+    return `<button class="slot-action button button-gold" data-action="message" data-game-id="${escapeHtml(game.id)}" data-slot="${escapeHtml(slotName)}" data-platform="${escapeHtml(platform)}"><span class="action-label-full">Message Now</span><span class="action-label-short">Message</span></button>`;
   }
   if (slot.status === "unavailable") {
-    return `<a class="slot-action button button-outline" href="${escapeHtml(waitlistLink(game, slotName, platform))}" target="_blank" rel="noopener noreferrer">Add to Waitlist</a>`;
+    return `<a class="slot-action button button-outline" href="${escapeHtml(waitlistLink(game, slotName, platform))}" target="_blank" rel="noopener noreferrer"><span class="action-label-full">Add to Waitlist</span><span class="action-label-short">Waitlist</span></a>`;
   }
   const text = slot.status === "maintenance" ? "Maintenance" : "Checking Slot";
   return `<button class="slot-action button button-disabled" type="button" disabled>${text}</button>`;
