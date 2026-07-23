@@ -228,7 +228,7 @@ function dateRank(value) {
   if (Number.isFinite(days) && days >= 0) return days;
 
   const label = String(value?.availableDate || "").trim();
-  const shortMatch = label.match(/^([A-Za-z]{3})\/(\d{1,2})$/);
+  const shortMatch = label.match(/^([A-Za-z]{3})[\s/]+(\d{1,2})$/);
   if (shortMatch) {
     const monthIndex = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"].indexOf(shortMatch[1].toLowerCase());
     if (monthIndex >= 0) {
@@ -271,11 +271,19 @@ function mergeSlots(slots) {
   return maintenance ? { ...maintenance, status: "maintenance" } : normalizeStatus("unavailable");
 }
 
-function effectiveSlots(game) {
-  const selectedPlatforms = state.filters.platform === "all"
-    ? game.platforms
-    : game.platforms.includes(state.filters.platform) ? [state.filters.platform] : [];
+function selectedPlatformsForGame(game) {
+  const preferredOrder = ["PS5", "PS4"];
+  const availablePlatforms = preferredOrder.filter((platform) => game.platforms.includes(platform));
 
+  if (state.filters.platform === "all") return availablePlatforms;
+  return availablePlatforms.includes(state.filters.platform) ? [state.filters.platform] : [];
+}
+
+function effectiveSlots(game) {
+  const selectedPlatforms = selectedPlatformsForGame(game);
+
+  // Used only for filtering and sorting. The game card itself displays each
+  // platform independently so PS4 can never visually overwrite PS5.
   return {
     trophy: mergeSlots(selectedPlatforms.map((platform) => game.availabilityByPlatform[platform]?.trophy)),
     nonTrophy: mergeSlots(selectedPlatforms.map((platform) => game.availabilityByPlatform[platform]?.nonTrophy))
@@ -362,19 +370,20 @@ function initialRentLabel(days) {
   return `${count} ${count === 1 ? "Day" : "Days"} Initial Rent`;
 }
 
-function inquiryPlatformLabel(game) {
+function inquiryPlatformLabel(game, platform = "") {
+  if (platform && game.platforms.includes(platform)) return platform;
   if (state.filters.platform !== "all" && game.platforms.includes(state.filters.platform)) {
     return state.filters.platform;
   }
-  return platformLabel(game.platforms).replace(" Only", "");
+  return game.platforms.length === 1 ? game.platforms[0] : platformLabel(game.platforms).replace(" Only", "");
 }
 
-function createInquiry(game, slotName) {
+function createInquiry(game, slotName, platform = "") {
   const lines = [
     "Hi JotunDGPH! I would like to inquire about this game:",
     `Game: ${game.title}`,
     `Game ID: ${game.id}`,
-    `Platform: ${inquiryPlatformLabel(game)}`,
+    `Platform: ${inquiryPlatformLabel(game, platform)}`,
     `Category: ${game.category.join(" / ")}`,
     `Slot: ${slotName}`
   ];
@@ -384,9 +393,9 @@ function createInquiry(game, slotName) {
   return lines.join("\n");
 }
 
-async function openMessenger(game, slotName) {
+async function openMessenger(game, slotName, platform = "") {
   if (game && slotName) {
-    const inquiry = createInquiry(game, slotName);
+    const inquiry = createInquiry(game, slotName, platform);
     try {
       await navigator.clipboard.writeText(inquiry);
       showToast("Inquiry copied. Paste it in Messenger.");
@@ -397,21 +406,21 @@ async function openMessenger(game, slotName) {
   window.open(SITE_CONFIG.messengerUrl, "_blank", "noopener,noreferrer");
 }
 
-function waitlistLink(game, slotName) {
+function waitlistLink(game, slotName, platform = "") {
   const url = new URL(SITE_CONFIG.waitlistUrl);
   url.searchParams.set("gameId", game.id);
   url.searchParams.set("game", game.title);
-  url.searchParams.set("platform", inquiryPlatformLabel(game));
+  url.searchParams.set("platform", inquiryPlatformLabel(game, platform));
   url.searchParams.set("slot", slotName);
   return url.toString();
 }
 
-function actionForSlot(game, slot, slotName) {
+function actionForSlot(game, slot, slotName, platform) {
   if (slot.status === "available") {
-    return `<button class="slot-action button button-gold" data-action="message" data-game-id="${escapeHtml(game.id)}" data-slot="${escapeHtml(slotName)}">Message Now</button>`;
+    return `<button class="slot-action button button-gold" data-action="message" data-game-id="${escapeHtml(game.id)}" data-slot="${escapeHtml(slotName)}" data-platform="${escapeHtml(platform)}">Message Now</button>`;
   }
   if (slot.status === "unavailable") {
-    return `<a class="slot-action button button-outline" href="${escapeHtml(waitlistLink(game, slotName))}" target="_blank" rel="noopener noreferrer">Add to Waitlist</a>`;
+    return `<a class="slot-action button button-outline" href="${escapeHtml(waitlistLink(game, slotName, platform))}" target="_blank" rel="noopener noreferrer">Add to Waitlist</a>`;
   }
   const text = slot.status === "maintenance" ? "Maintenance" : "Checking Slot";
   return `<button class="slot-action button button-disabled" type="button" disabled>${text}</button>`;
@@ -421,13 +430,36 @@ function escapeHtml(value) {
   return String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
 }
 
+function slotEntriesForPlatform(game, platform) {
+  const platformAvailability = game.availabilityByPlatform[platform] || {};
+  const trophy = platformAvailability.trophy || normalizeStatus("unavailable");
+  const nonTrophy = platformAvailability.nonTrophy || normalizeStatus("unavailable");
+
+  if (state.filters.slot === "trophy") return [["Trophy", trophy]];
+  if (state.filters.slot === "nonTrophy") return [["Non-Trophy", nonTrophy]];
+  return [["Trophy", trophy], ["Non-Trophy", nonTrophy]];
+}
+
 function gameCard(game) {
-  const slots = effectiveSlots(game);
-  const visibleSlots = state.filters.slot === "trophy"
-    ? [["Trophy", slots.trophy]]
-    : state.filters.slot === "nonTrophy"
-      ? [["Non-Trophy", slots.nonTrophy]]
-      : [["Trophy", slots.trophy], ["Non-Trophy", slots.nonTrophy]];
+  const platforms = selectedPlatformsForGame(game);
+  const showPlatformHeadings = state.filters.platform === "all" && platforms.length > 1;
+
+  const platformGroups = platforms.map((platform) => {
+    const rows = slotEntriesForPlatform(game, platform);
+    return `
+      <section class="platform-slot-group" aria-label="${escapeHtml(platform)} availability">
+        ${showPlatformHeadings ? `<div class="platform-slot-heading">${escapeHtml(platform)}</div>` : ""}
+        ${rows.map(([name, slot]) => `
+          <div class="slot-row">
+            <div class="slot-status">
+              <strong>${escapeHtml(name)}</strong>
+              <span class="status status-${slot.status.replace(/\s+/g, "-")}"><i></i>${escapeHtml(slotLabel(slot))}</span>
+            </div>
+            ${actionForSlot(game, slot, name, platform)}
+          </div>
+        `).join("")}
+      </section>`;
+  }).join("");
 
   return `
     <article class="game-card glass-panel">
@@ -450,15 +482,7 @@ function gameCard(game) {
           </div>
         </div>
         <div class="slot-list">
-          ${visibleSlots.map(([name, slot]) => `
-            <div class="slot-row">
-              <div class="slot-status">
-                <strong>${name}</strong>
-                <span class="status status-${slot.status.replace(/\s+/g, "-")}"><i></i>${escapeHtml(slotLabel(slot))}</span>
-              </div>
-              ${actionForSlot(game, slot, name)}
-            </div>
-          `).join("")}
+          ${platformGroups}
         </div>
       </div>
     </article>`;
@@ -567,7 +591,7 @@ function bindEvents() {
     const messageButton = event.target.closest('[data-action="message"]');
     if (messageButton) {
       const game = state.games.find((item) => item.id === messageButton.dataset.gameId);
-      if (game) openMessenger(game, messageButton.dataset.slot);
+      if (game) openMessenger(game, messageButton.dataset.slot, messageButton.dataset.platform || "");
       return;
     }
     const mainMessage = event.target.closest("[data-main-message]");
