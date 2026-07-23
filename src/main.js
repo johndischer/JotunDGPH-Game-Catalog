@@ -99,7 +99,7 @@ function normalizeGame(raw, index) {
   const id = String(firstValue(raw, ["id", "gameId", "gameID", "Game ID", "GameId"], `JG-${String(index + 1).padStart(4, "0")}`));
   const title = String(firstValue(raw, ["title", "gameTitle", "name", "Game Title", "Game"], `Untitled Game ${index + 1}`));
   const categories = arrayValue(firstValue(raw, ["category", "categories", "plan", "eligibility", "Category", "Plan"], "Classic"));
-  const coverFilename = String(firstValue(raw, ["coverFilename", "cover", "image", "coverFile", "Cover Filename"], `${id}.webp`));
+  const coverFilename = String(firstValue(raw, ["coverFilename", "cover", "image", "coverFile", "Cover Filename"], "")).trim();
 
   const rawPlatformData = firstValue(raw, ["platforms"], null);
   const availabilityByPlatform = {};
@@ -431,9 +431,9 @@ function gameCard(game) {
 
   return `
     <article class="game-card glass-panel">
-      <div class="cover-wrap">
-        <img src="${escapeHtml(coverUrl(game.coverFilename))}" alt="${escapeHtml(game.title)} cover" loading="lazy" decoding="async" data-cover />
-        <div class="cover-placeholder" aria-hidden="true"><span>${escapeHtml(game.id)}</span></div>
+      <div class="cover-wrap${game.coverFilename ? "" : " cover-error"}">
+        ${game.coverFilename ? `<img src="${escapeHtml(coverUrl(game.coverFilename))}" alt="${escapeHtml(game.title)} cover" loading="lazy" decoding="async" data-cover />` : ""}
+        <div class="cover-placeholder" aria-hidden="true"><span>${escapeHtml(game.coverFilename || game.id)}</span></div>
       </div>
       <div class="game-info">
         <div class="title-row">
