@@ -5,7 +5,7 @@ export const SAMPLE_GAMES = [
     aliases: ["Ghost of Yotei", "Yotei"],
     platforms: ["PS5"],
     category: ["Premium"],
-    coverFilename: "JG-0001.svg",
+    coverFilename: "JG-001.png",
     minimumInitialRentDays: 7,
     trophy: { status: "available" },
     nonTrophy: { status: "available" }
@@ -16,7 +16,7 @@ export const SAMPLE_GAMES = [
     aliases: ["FF7", "FFVII", "Final Fantasy 7"],
     platforms: ["PS5"],
     category: ["Premium", "Classic"],
-    coverFilename: "JG-0002.svg",
+    coverFilename: "JG-002.png",
     trophy: { status: "unavailable", availableDate: "Jul 30" },
     nonTrophy: { status: "unavailable", availableDate: "Jul 30" }
   },
@@ -26,7 +26,7 @@ export const SAMPLE_GAMES = [
     aliases: ["RE4", "Resident Evil 4 Remake"],
     platforms: ["PS4", "PS5"],
     category: ["Classic"],
-    coverFilename: "JG-0003.svg",
+    coverFilename: "JG-003.png",
     trophy: { status: "awaiting deactivation" },
     nonTrophy: { status: "available" }
   },
@@ -36,7 +36,7 @@ export const SAMPLE_GAMES = [
     aliases: ["Astrobot"],
     platforms: ["PS5"],
     category: ["Premium", "Classic"],
-    coverFilename: "JG-0004.svg",
+    coverFilename: "JG-004.png",
     trophy: { status: "maintenance" },
     nonTrophy: { status: "available" }
   }
