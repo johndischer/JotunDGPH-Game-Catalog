@@ -118,8 +118,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   background: rgba(19, 20, 21, 0.72);
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.035), 0 10px 32px rgba(0, 0, 0, 0.22);
 }
-.brand { display: flex; width: max-content; align-items: center; gap: 12px; text-decoration: none; }
-.brand img { width: 48px; height: 48px; }
+.brand { display: flex; width: max-content; align-items: center; gap: 11px; text-decoration: none; }
+.brand-icon-shell {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.055);
+}
+.brand-icon-shell img {
+  width: 30px;
+  height: 30px;
+  display: block;
+  object-fit: contain;
+}
 .brand span { display: grid; gap: 2px; }
 .brand strong { font-family: Sora, sans-serif; font-size: 18px; letter-spacing: -0.02em; }
 .brand small { color: var(--silver); font-size: 11px; }
@@ -276,7 +293,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
-.game-id { margin: 7px 0 0; color: var(--muted); font-size: 12px; letter-spacing: 0.03em; }
 .badges { max-width: 48%; display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 7px; }
 .badges span {
   min-height: 28px;
@@ -316,7 +332,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   padding: 10px 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 10px;
   border-bottom: 1px solid rgba(242, 185, 0, 0.24);
   background: linear-gradient(90deg, rgba(242, 185, 0, 0.1), rgba(255, 255, 255, 0.018));
@@ -336,17 +352,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-weight: 800;
   letter-spacing: 0.07em;
 }
-.platform-caption {
-  min-width: 0;
-  overflow: hidden;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
 .platform-slot-grid {
   min-height: 0;
   padding: 10px;
@@ -357,6 +362,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 .platform-slot-grid.single-slot { grid-template-columns: minmax(0, 1fr); }
 .slot-card {
+  position: relative;
+  z-index: 0;
   min-width: 0;
   min-height: 106px;
   padding: 11px;
@@ -366,7 +373,31 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   border: 1px solid rgba(255, 255, 255, 0.085);
   border-radius: 11px;
   background: rgba(255, 255, 255, 0.027);
+  transform: translateZ(0);
+  transform-origin: center;
+  transition:
+    transform 180ms cubic-bezier(.2, .8, .2, 1),
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+  will-change: transform;
 }
+@media (hover: hover) and (pointer: fine) {
+  .slot-card:hover {
+    z-index: 2;
+    transform: translateY(-2px) scale(1.025);
+    border-color: rgba(242, 185, 0, 0.34);
+    background: rgba(242, 185, 0, 0.045);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26), inset 0 1px rgba(255, 255, 255, 0.045);
+  }
+}
+.slot-card:focus-within {
+  z-index: 2;
+  transform: translateY(-2px) scale(1.025);
+  border-color: rgba(242, 185, 0, 0.42);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
+}
+.slot-card:active { transform: scale(0.985); }
 .slot-card-topline { min-width: 0; display: grid; align-content: start; gap: 7px; }
 .slot-name {
   color: var(--white);
@@ -449,7 +480,8 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
   .page-width, .header-inner { width: min(calc(100% - 32px), var(--page)); }
   .site-header { padding: 8px 0; }
   .header-inner { min-height: 56px; padding: 6px 7px 6px 9px; border-radius: 15px; }
-  .brand img { width: 42px; height: 42px; }
+  .brand-icon-shell { width: 40px; height: 40px; flex-basis: 40px; }
+  .brand-icon-shell img { width: 27px; height: 27px; }
   .brand strong { font-size: 16px; }
   .brand small { display: none; }
   .header-message { min-height: 42px; padding: 9px 11px; font-size: 12px; }
@@ -490,14 +522,15 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
 
 @media (max-width: 360px) {
   .page-width, .header-inner { width: min(calc(100% - 24px), var(--page)); }
-  .brand img { width: 38px; height: 38px; }
+  .brand-icon-shell { width: 38px; height: 38px; flex-basis: 38px; }
+  .brand-icon-shell img { width: 25px; height: 25px; }
   .game-info { padding-inline: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .button:hover, .game-card:hover { transform: none; }
+  .button:hover, .game-card:hover, .slot-card:hover, .slot-card:focus-within, .slot-card:active { transform: none; }
 }
 
 @supports not (backdrop-filter: blur(1px)) {
