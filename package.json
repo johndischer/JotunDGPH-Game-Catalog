@@ -1,0 +1,20 @@
+{
+  "name": "jotundgph-command-glass-catalog",
+  "version": "2.3.0",
+  "private": true,
+  "description": "JotunDGPH Command Glass digital game rental catalog deployed with Cloudflare Workers Static Assets.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "worker:dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.113.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

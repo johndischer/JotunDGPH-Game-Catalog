@@ -1,0 +1,3 @@
+/catalog /catalog/ 301
+/catalog/* /index.html 200
+/* /index.html 200

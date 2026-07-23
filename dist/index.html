@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090a0b" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="Browse JotunDGPH PS4 and PS5 digital game rentals with live Trophy and Non-Trophy availability." />
+    <meta property="og:title" content="JotunDGPH — Digital Game Rentals" />
+    <meta property="og:description" content="Choose. Play. Swap. Repeat. Browse live Trophy and Non-Trophy availability." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <title>Game Catalog | JotunDGPH</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#games">Skip to game catalog</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#top" aria-label="JotunDGPH home">
+          <img src="/logo.svg" alt="" width="48" height="48" />
+          <span>
+            <strong>JotunDGPH</strong>
+            <small>Play More. Play Smart.</small>
+          </span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a class="active" href="#games">Browse Games</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#plans">Plans</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <a class="button button-gold header-message" data-main-message href="#">Message Now</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero page-width" aria-labelledby="page-title">
+        <p class="eyebrow">PS4 &amp; PS5 DIGITAL GAME RENTALS</p>
+        <h1 id="page-title">Choose. Play. Swap. Repeat.</h1>
+        <p id="hero-subtitle">Browse games, your next adventure awaits!</p>
+        <div id="mode-banner" class="mode-banner" hidden></div>
+      </section>
+
+      <section id="games" class="catalog-section page-width" aria-labelledby="catalog-title">
+        <h2 id="catalog-title" class="catalog-title">Browse the game catalog</h2>
+        <div class="catalog" aria-label="Game catalog">
+        <aside class="filter-panel glass-panel" aria-label="Game filters">
+          <div class="filter-heading">
+            <h2>Filters</h2>
+            <button id="clear-filters" class="text-button" type="button">Clear</button>
+          </div>
+          <div id="desktop-filters"></div>
+        </aside>
+
+        <div class="catalog-main">
+          <div class="search-panel glass-panel">
+            <label class="search-box">
+              <span class="sr-only">Search games</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+              <input id="search-input" type="search" placeholder="Search titles or aliases — FF7, RE4..." autocomplete="off" />
+            </label>
+
+            <label class="sort-box">
+              <span class="sr-only">Sort games</span>
+              <select id="sort-select">
+                <option value="availability">Availability first</option>
+                <option value="title-asc">Title A–Z</option>
+                <option value="title-desc">Title Z–A</option>
+              </select>
+            </label>
+
+            <button id="refresh-button" class="icon-button" type="button" title="Refresh availability" aria-label="Refresh availability">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>
+            </button>
+          </div>
+
+          <div class="mobile-filter-row">
+            <button id="open-filters" class="button button-outline" type="button">Filters</button>
+            <div id="active-filter-pills" class="active-pills" aria-label="Active filters"></div>
+          </div>
+
+          <div class="catalog-meta">
+            <p id="result-count">Loading games…</p>
+            <p id="sync-status" aria-live="polite"></p>
+          </div>
+
+          <div id="game-list" class="game-list" aria-live="polite"></div>
+
+          <div id="empty-state" class="empty-state glass-panel" hidden>
+            <h2>No matching games found</h2>
+            <p>Try another spelling or clear your filters.</p>
+            <button class="button button-outline" data-clear-all type="button">Reset Search &amp; Filters</button>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="info-section page-width">
+        <p class="eyebrow">SIMPLE FROM START TO FINISH</p>
+        <h2>How it works</h2>
+        <div class="info-grid">
+          <article class="glass-panel"><span>01</span><h3>Choose</h3><p>Search the catalog and check Trophy or Non-Trophy availability.</p></article>
+          <article class="glass-panel"><span>02</span><h3>Message</h3><p>Send the prepared inquiry through Messenger and confirm your slot.</p></article>
+          <article class="glass-panel"><span>03</span><h3>Play</h3><p>Follow the setup guide, download your game, and start your adventure.</p></article>
+        </div>
+      </section>
+
+      <section id="plans" class="info-section page-width compact-section">
+        <p class="eyebrow">CHOOSE YOUR PLAY STYLE</p>
+        <h2>Game categories</h2>
+        <div class="category-grid">
+          <article class="glass-panel featured-category"><small>PREMIUM</small><h3>Newer and in-demand titles</h3><p>For featured releases and high-demand games in the Premium catalog.</p></article>
+          <article class="glass-panel"><small>CLASSIC</small><h3>Great games, smarter value</h3><p>For established favorites and a broader value-focused selection.</p></article>
+        </div>
+      </section>
+
+      <section id="faq" class="info-section page-width compact-section faq-section">
+        <p class="eyebrow">GOOD TO KNOW</p>
+        <h2>Frequently asked questions</h2>
+        <details class="glass-panel"><summary>What does “Not Available” mean?</summary><p>The slot is currently rented. When provided, the date beside the status is the expected day it becomes available.</p></details>
+        <details class="glass-panel"><summary>What is “Awaiting Deactivation”?</summary><p>The rental has ended, but the current renter still needs to complete the account deactivation process before the slot can be released.</p></details>
+        <details class="glass-panel"><summary>Why are some games marked “PS5 Only”?</summary><p>Those titles do not have a PS4 version in the JotunDGPH catalog and will be hidden when the PS4 filter is selected.</p></details>
+        <details class="glass-panel"><summary>What does “1 shared slot” mean?</summary><p>The game can be played on PS4 or PS5, but only one Non-Trophy renter can use that shared slot at a time.</p></details>
+      </section>
+    </main>
+
+    <footer>
+      <div class="page-width footer-inner">
+        <div><strong>JotunDGPH</strong><p>Play More. Play Smart.</p></div>
+        <p class="footer-note">Final availability is confirmed at the time of payment.</p>
+        <p class="footer-copy">© <span id="copyright-year"></span> JotunDGPH</p>
+      </div>
+    </footer>
+
+    <dialog id="filter-dialog" class="filter-dialog">
+      <form method="dialog" class="dialog-shell glass-panel">
+        <div class="dialog-heading"><h2>Filter games</h2><button class="icon-button close-dialog" value="cancel" aria-label="Close filters">×</button></div>
+        <div id="mobile-filters"></div>
+        <div class="dialog-actions">
+          <button id="mobile-clear" class="button button-outline" type="button">Clear all</button>
+          <button class="button button-gold" value="done">Show games</button>
+        </div>
+      </form>
+    </dialog>
+
+    <noscript><p class="noscript-note">This catalog needs JavaScript enabled to show game availability.</p></noscript>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
