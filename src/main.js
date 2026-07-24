@@ -538,10 +538,11 @@ function gameCard(game) {
       <div class="cover-wrap${game.coverFilename ? "" : " cover-error"}">
         ${game.coverFilename ? `<img src="${escapeHtml(coverUrl(game.coverFilename))}" alt="${escapeHtml(game.title)} cover" loading="lazy" decoding="async" data-cover />` : ""}
         <div class="cover-placeholder" aria-hidden="true"><span>${escapeHtml(game.coverFilename || game.id)}</span></div>
-        <div class="mobile-cover-badges" aria-hidden="true">
-          <span class="mobile-platform-badge">${escapeHtml(platformLabel(game.platforms).replace(" Only", ""))}</span>
-          ${game.minimumInitialRentDays > 0 ? `<span class="mobile-initial-rent-badge">${escapeHtml(`${game.minimumInitialRentDays}D`)}</span>` : ""}
-        </div>
+        ${game.minimumInitialRentDays > 0
+          ? `<div class="mobile-cover-badges" aria-label="${escapeHtml(initialRentLabel(game.minimumInitialRentDays))}">
+              <span class="mobile-initial-rent-badge"><strong>${escapeHtml(`${game.minimumInitialRentDays} Days`)}</strong><small>Initial Rent</small></span>
+            </div>`
+          : ""}
         ${mobileFloatingActions(game)}
       </div>
       <div class="game-info">
