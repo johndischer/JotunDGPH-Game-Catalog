@@ -692,6 +692,16 @@ function bindEvents() {
   $("#mobile-clear").addEventListener("click", clearFilters);
   $("#refresh-button").addEventListener("click", () => loadGames({ manual: true }));
   $("#open-filters").addEventListener("click", () => elements.dialog.showModal());
+
+  const mobileMenu = $("#mobile-menu");
+  const mobileMenuButton = $("#mobile-menu-button");
+  const mobileMenuClose = $("#mobile-menu-close");
+  mobileMenuButton?.addEventListener("click", () => mobileMenu?.showModal());
+  mobileMenuClose?.addEventListener("click", () => mobileMenu?.close());
+  mobileMenu?.addEventListener("click", (event) => {
+    if (event.target === mobileMenu) mobileMenu.close();
+    if (event.target.closest(".mobile-menu-nav a")) mobileMenu.close();
+  });
 }
 
 bindEvents();
