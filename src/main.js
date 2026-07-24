@@ -440,6 +440,74 @@ function slotEntriesForPlatform(game, platform) {
   return [["Trophy Slot", trophy], ["Non-Trophy Slot", nonTrophy]];
 }
 
+function mobileSlotName(name) {
+  return name === "Non-Trophy Slot" ? "Non-Trophy" : "Trophy";
+}
+
+function mobileSlotStatus(slot) {
+  if (slot.status === "available") return "Available";
+  if (slot.status === "unavailable") {
+    const date = formatDate(slot.availableDate);
+    return date || "Unavailable";
+  }
+  if (slot.status === "awaiting deactivation") return "Pending";
+  if (slot.status === "maintenance") return "Maintenance";
+  return "Unavailable";
+}
+
+function mobileAvailabilitySummary(game) {
+  return selectedPlatformsForGame(game).map((platform) => {
+    const rows = slotEntriesForPlatform(game, platform);
+    return `
+      <section class="mobile-platform-status" aria-label="${escapeHtml(platform)} availability">
+        <strong class="mobile-platform-name">${escapeHtml(platform)}</strong>
+        <div class="mobile-slot-statuses ${rows.length === 1 ? "single-slot" : ""}">
+          ${rows.map(([name, slot]) => `
+            <div class="mobile-slot-status">
+              <span>${escapeHtml(mobileSlotName(name))}</span>
+              <em class="mobile-status mobile-status-${slot.status.replace(/\s+/g, "-")}"><i></i>${escapeHtml(mobileSlotStatus(slot))}</em>
+            </div>
+          `).join("")}
+        </div>
+      </section>`;
+  }).join("");
+}
+
+function mobileActionTargets(game) {
+  const entries = [];
+  selectedPlatformsForGame(game).forEach((platform) => {
+    slotEntriesForPlatform(game, platform).forEach(([name, slot]) => {
+      entries.push({ platform, name, slot });
+    });
+  });
+
+  return {
+    message: entries.find((entry) => entry.slot.status === "available") || null,
+    waitlist: entries.find((entry) => entry.slot.status === "unavailable") || null
+  };
+}
+
+function mobileFloatingActions(game) {
+  const targets = mobileActionTargets(game);
+  const message = targets.message
+    ? `<button class="mobile-float-action mobile-float-message" type="button" data-action="message" data-game-id="${escapeHtml(game.id)}" data-slot="${escapeHtml(targets.message.name)}" data-platform="${escapeHtml(targets.message.platform)}" aria-label="Message about ${escapeHtml(game.title)} — ${escapeHtml(targets.message.platform)} ${escapeHtml(targets.message.name)}" title="Message">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15a4 4 0 0 1-4 4H8l-5 3 1.5-4.5A7 7 0 0 1 3 13V9a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4v6Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>
+      </button>`
+    : `<button class="mobile-float-action" type="button" disabled aria-label="No slot currently available to message about" title="No available slot">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15a4 4 0 0 1-4 4H8l-5 3 1.5-4.5A7 7 0 0 1 3 13V9a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4v6Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>
+      </button>`;
+
+  const waitlist = targets.waitlist
+    ? `<a class="mobile-float-action mobile-float-waitlist" href="${escapeHtml(waitlistLink(game, targets.waitlist.name, targets.waitlist.platform))}" target="_blank" rel="noopener noreferrer" aria-label="Join waitlist for ${escapeHtml(game.title)} — ${escapeHtml(targets.waitlist.platform)} ${escapeHtml(targets.waitlist.name)}" title="Join waitlist">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h8"/><path d="M3 6h.01M3 12h.01M3 18h.01"/><path d="M19 16v6M16 19h6"/></svg>
+      </a>`
+    : `<span class="mobile-float-action" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h8"/><path d="M3 6h.01M3 12h.01M3 18h.01"/><path d="M19 16v6M16 19h6"/></svg>
+      </span>`;
+
+  return `<div class="mobile-floating-actions" aria-label="Quick actions">${message}${waitlist}</div>`;
+}
+
 function gameCard(game) {
   const platforms = selectedPlatformsForGame(game);
   const platformGroups = platforms.map((platform) => {
@@ -470,6 +538,11 @@ function gameCard(game) {
       <div class="cover-wrap${game.coverFilename ? "" : " cover-error"}">
         ${game.coverFilename ? `<img src="${escapeHtml(coverUrl(game.coverFilename))}" alt="${escapeHtml(game.title)} cover" loading="lazy" decoding="async" data-cover />` : ""}
         <div class="cover-placeholder" aria-hidden="true"><span>${escapeHtml(game.coverFilename || game.id)}</span></div>
+        <div class="mobile-cover-badges" aria-hidden="true">
+          <span class="mobile-platform-badge">${escapeHtml(platformLabel(game.platforms).replace(" Only", ""))}</span>
+          ${game.minimumInitialRentDays > 0 ? `<span class="mobile-initial-rent-badge">${escapeHtml(`${game.minimumInitialRentDays}D`)}</span>` : ""}
+        </div>
+        ${mobileFloatingActions(game)}
       </div>
       <div class="game-info">
         <div class="title-row">
@@ -483,6 +556,9 @@ function gameCard(game) {
               ? `<span class="initial-rent-badge">${escapeHtml(initialRentLabel(game.minimumInitialRentDays))}</span>`
               : ""}
           </div>
+        </div>
+        <div class="mobile-availability-summary">
+          ${mobileAvailabilitySummary(game)}
         </div>
         <div class="availability-grid availability-grid-${platforms.length}">
           ${platformGroups}
