@@ -784,33 +784,36 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
     inset: 8px 8px auto 8px;
     z-index: 4;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 6px;
     pointer-events: none;
   }
-  .mobile-platform-badge,
   .mobile-initial-rent-badge {
-    min-height: 23px;
-    padding: 4px 7px;
+    min-height: 30px;
+    padding: 6px 9px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 7px;
-    color: var(--white);
-    background: rgba(16, 17, 18, 0.84);
-    backdrop-filter: blur(10px);
-    font-size: 9px;
+    gap: 6px;
+    border: 1px solid rgba(255, 216, 74, 0.72);
+    border-radius: 8px;
+    color: #171300;
+    background: linear-gradient(135deg, #f2b900, #ffd84a);
     font-style: normal;
-    font-weight: 800;
     line-height: 1;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 7px 20px rgba(242, 185, 0, 0.34), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
   }
-  .mobile-initial-rent-badge {
-    color: var(--gold-hover);
-    border-color: rgba(242, 185, 0, 0.42);
-    background: rgba(66, 51, 5, 0.82);
+  .mobile-initial-rent-badge strong {
+    font-family: Sora, sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .mobile-initial-rent-badge small {
+    padding-left: 6px;
+    border-left: 1px solid rgba(23, 19, 0, 0.28);
+    color: rgba(23, 19, 0, 0.82);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   .mobile-floating-actions {
@@ -962,8 +965,9 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
   .game-card { border-radius: 13px; }
   .game-info { padding: 9px 7px 10px; }
   .title-row h2 { font-size: 13px; }
-  .mobile-platform-badge,
-  .mobile-initial-rent-badge { padding-inline: 6px; font-size: 8px; }
+  .mobile-initial-rent-badge { padding: 5px 7px; gap: 5px; }
+  .mobile-initial-rent-badge strong { font-size: 9px; }
+  .mobile-initial-rent-badge small { padding-left: 5px; font-size: 7px; }
   .mobile-float-action { width: 34px; height: 34px; }
   .mobile-slot-status > span { font-size: 7.5px; }
   .mobile-status { font-size: 8px; }
