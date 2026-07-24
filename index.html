@@ -39,7 +39,14 @@
           <a href="#faq">FAQ</a>
         </nav>
 
-        <a class="button button-gold header-message" data-main-message href="#">Message Now</a>
+        <div class="header-actions">
+          <a class="button button-gold header-message" data-main-message href="#">Message Now</a>
+          <button id="mobile-menu-button" class="mobile-menu-button" type="button" aria-label="Open navigation menu" aria-haspopup="dialog" aria-controls="mobile-menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -136,11 +143,11 @@
       <section id="faq" class="info-section page-width compact-section faq-section">
         <p class="eyebrow">GOOD TO KNOW</p>
         <h2>Frequently Asked Questions</h2>
+        <details class="glass-panel"><summary>What is the difference between Trophy and Non-Trophy slots?</summary><p><strong>Trophy Slot:</strong> Play on your own account. Trophies and save-file progress stay on your account.</p><p><strong>Non-Trophy Slot:</strong> Play on our account. Trophies and save-file progress stay on our account. Occasional logouts may happen when account passwords expire. Please reach out through Messenger so we can provide the updated password.</p></details>
         <details class="glass-panel"><summary>What does “Not Available” mean?</summary><p>The slot is currently rented. When provided, the date beside the status is the expected day it becomes available.</p></details>
         <details class="glass-panel"><summary>What is “Awaiting Deactivation”?</summary><p>The rental has ended, but the current renter still needs to complete the account deactivation process before the slot can be released.</p></details>
         <details class="glass-panel"><summary>Why are some games marked “PS5 Only”?</summary><p>Those titles do not have a PS4 version in the JotunDGPH catalog and will be hidden when the PS4 filter is selected.</p></details>
         <details class="glass-panel"><summary>What is 7 Days Initial Rent?</summary><p>This applies to newly released games. The first rental must be under the Premium Plan for 7 days. After the initial rental, you may extend based on our regular rental rates.</p></details>
-        <details class="glass-panel"><summary>What is the difference between Trophy and Non-Trophy slots?</summary><p><strong>Trophy Slot:</strong> Play on your own account. Trophies and save-file progress stay on your account.</p><p><strong>Non-Trophy Slot:</strong> Play on our account. Trophies and save-file progress stay on our account.</p></details>
       </section>
     </main>
 
@@ -161,6 +168,24 @@
           <button class="button button-gold" value="done">Show games</button>
         </div>
       </form>
+    </dialog>
+
+
+    <dialog id="mobile-menu" class="mobile-menu-dialog" aria-labelledby="mobile-menu-title">
+      <div class="mobile-menu-shell glass-panel">
+        <div class="mobile-menu-heading">
+          <div>
+            <p class="eyebrow">NAVIGATION</p>
+            <h2 id="mobile-menu-title">Menu</h2>
+          </div>
+          <button id="mobile-menu-close" class="icon-button mobile-menu-close" type="button" aria-label="Close navigation menu">×</button>
+        </div>
+        <nav class="mobile-menu-nav" aria-label="Mobile navigation">
+          <a href="#how-it-works"><span>01</span><strong>How?</strong><small>How renting works</small></a>
+          <a href="#plans"><span>02</span><strong>Plans</strong><small>Premium, Classic and Single</small></a>
+          <a href="#faq"><span>03</span><strong>FAQ</strong><small>Answers before you rent</small></a>
+        </nav>
+      </div>
     </dialog>
 
     <noscript><p class="noscript-note">This catalog needs JavaScript enabled to show game availability.</p></noscript>
