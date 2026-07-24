@@ -446,7 +446,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .faq-section details { margin: 10px 0; padding: 0 20px; border-radius: 14px; }
 .faq-section summary { min-height: 60px; display: flex; align-items: center; justify-content: space-between; font-weight: 700; cursor: pointer; }
 .faq-section summary::after { content: "+"; color: var(--gold); font-size: 22px; }
-.faq-section details[open] summary::after { content: "−"; }
+.faq-section details[open] summary::after { content: "âˆ’"; }
 .faq-section details p { margin: 0; padding: 0 0 20px; color: var(--silver); line-height: 1.65; }
 footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
 .footer-inner { min-height: 140px; display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 32px; }
@@ -541,7 +541,7 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
   .glass-panel, .site-header, .header-inner { background: #171819; }
 }
 
-/* v9 — mobile catalog UX */
+/* v9 â€” mobile catalog UX */
 .action-label-short { display: none; }
 
 @media (max-width: 767px) {
@@ -709,7 +709,7 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
   .slot-action { min-height: 30px; }
 }
 
-/* v10 — compact two-column mobile catalog */
+/* v10 â€” compact two-column mobile catalog */
 .mobile-cover-badges,
 .mobile-floating-actions,
 .mobile-availability-summary {
@@ -975,4 +975,115 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
 
 @media (max-width: 320px) {
   .game-list { grid-template-columns: 1fr; }
+}
+
+/* v13 â€” mobile navigation menu */
+.header-actions {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.mobile-menu-button {
+  width: 42px;
+  height: 42px;
+  display: none;
+  place-items: center;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid rgba(242, 185, 0, 0.28);
+  border-radius: 12px;
+  color: var(--gold-hover);
+  background: rgba(24, 25, 26, 0.8);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
+}
+.mobile-menu-button span {
+  width: 18px;
+  height: 2px;
+  display: block;
+  border-radius: 999px;
+  background: currentColor;
+}
+.mobile-menu-dialog {
+  width: min(90vw, 420px);
+  max-height: 82vh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.mobile-menu-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.74);
+  backdrop-filter: blur(7px);
+}
+.mobile-menu-shell {
+  margin: 0;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(155deg, rgba(38, 39, 40, 0.94), rgba(13, 14, 15, 0.98));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.52), inset 0 1px rgba(255, 255, 255, 0.05);
+}
+.mobile-menu-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.mobile-menu-heading .eyebrow { margin: 0 0 5px; }
+.mobile-menu-heading h2 {
+  margin: 0;
+  font-family: Sora, sans-serif;
+  font-size: 24px;
+}
+.mobile-menu-close { font-size: 26px; line-height: 1; }
+.mobile-menu-nav {
+  margin-top: 16px;
+  display: grid;
+  gap: 9px;
+}
+.mobile-menu-nav a {
+  min-height: 72px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 11px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.025);
+  text-decoration: none;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.mobile-menu-nav a > span {
+  grid-row: 1 / 3;
+  color: var(--gold-hover);
+  font-family: Sora, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+.mobile-menu-nav strong { font-family: Sora, sans-serif; font-size: 15px; }
+.mobile-menu-nav small { color: var(--muted); font-size: 11px; }
+.mobile-menu-nav a:active {
+  transform: scale(0.985);
+  border-color: rgba(242, 185, 0, 0.45);
+  background: rgba(242, 185, 0, 0.07);
+}
+
+@media (max-width: 1023px) {
+  .mobile-menu-button { display: grid; }
+}
+
+@media (max-width: 767px) {
+  .header-inner { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .header-actions { gap: 6px; }
+  .header-message { min-height: 40px; padding-inline: 10px; }
+  .mobile-menu-button { width: 40px; height: 40px; border-radius: 11px; }
+}
+
+@media (max-width: 390px) {
+  .header-message { display: none; }
+  .mobile-menu-button { width: 42px; height: 42px; }
 }
