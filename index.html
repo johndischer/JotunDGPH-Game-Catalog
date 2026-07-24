@@ -8,6 +8,7 @@
     <meta name="description" content="Browse JotunDGPH PS4 and PS5 digital game rentals with live Trophy and Non-Trophy availability." />
     <meta property="og:title" content="JotunDGPH — Digital Game Rentals" />
     <meta property="og:description" content="Choose. Play. Swap. Repeat. Browse live Trophy and Non-Trophy availability." />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,7 +34,7 @@
 
         <nav class="desktop-nav" aria-label="Main navigation">
           <a class="active" href="#games">Browse Games</a>
-          <a href="#how-it-works">How It Works</a>
+          <a href="#how-it-works">How?</a>
           <a href="#plans">Plans</a>
           <a href="#faq">FAQ</a>
         </nav>
@@ -46,7 +47,7 @@
       <section class="hero page-width" aria-labelledby="page-title">
         <p class="eyebrow">PS4 &amp; PS5 DIGITAL GAME RENTALS</p>
         <h1 id="page-title">Choose. Play. Swap. Repeat.</h1>
-        <p id="hero-subtitle">Browse games, your next adventure awaits!</p>
+        <p id="hero-subtitle">Browse Games, your next adventure awaits, 1 game at a time!</p>
         <div id="mode-banner" class="mode-banner" hidden></div>
       </section>
 
@@ -72,9 +73,9 @@
             <label class="sort-box">
               <span class="sr-only">Sort games</span>
               <select id="sort-select">
+                <option value="title-asc" selected>Title: A-Z</option>
+                <option value="title-desc">Title: Z-A</option>
                 <option value="availability">Availability first</option>
-                <option value="title-asc">Title A–Z</option>
-                <option value="title-desc">Title Z–A</option>
               </select>
             </label>
 
@@ -106,30 +107,39 @@
 
       <section id="how-it-works" class="info-section page-width">
         <p class="eyebrow">SIMPLE FROM START TO FINISH</p>
-        <h2>How it works</h2>
+        <h2>How?</h2>
         <div class="info-grid">
-          <article class="glass-panel"><span>01</span><h3>Choose</h3><p>Search the catalog and check Trophy or Non-Trophy availability.</p></article>
-          <article class="glass-panel"><span>02</span><h3>Message</h3><p>Send the prepared inquiry through Messenger and confirm your slot.</p></article>
-          <article class="glass-panel"><span>03</span><h3>Play</h3><p>Follow the setup guide, download your game, and start your adventure.</p></article>
+          <article class="glass-panel">
+            <div class="step-heading"><span>01.</span><h3>Choose</h3></div>
+            <p>Search the catalog and check for Trophy or Non-Trophy Availability. Date specified is the next availability date of the slot.</p>
+          </article>
+          <article class="glass-panel">
+            <div class="step-heading"><span>02.</span><h3>Message</h3></div>
+            <p>Send an inquiry through Messenger, provide requirements and pay for the slot.</p>
+          </article>
+          <article class="glass-panel">
+            <div class="step-heading"><span>03.</span><h3>Play</h3></div>
+            <p>Follow the setup guide, download your game, and start your adventure.</p>
+          </article>
         </div>
       </section>
 
       <section id="plans" class="info-section page-width compact-section">
         <p class="eyebrow">CHOOSE YOUR PLAY STYLE</p>
-        <h2>Game categories</h2>
+        <h2>Game Categories</h2>
         <div class="category-grid">
-          <article class="glass-panel featured-category"><small>PREMIUM</small><h3>Newer and in-demand titles</h3><p>For featured releases and high-demand games in the Premium catalog.</p></article>
-          <article class="glass-panel"><small>CLASSIC</small><h3>Great games, smarter value</h3><p>For established favorites and a broader value-focused selection.</p></article>
+          <article class="glass-panel featured-category"><small>PREMIUM</small><h3>Premium</h3><p>For New Releases, Bundled and In-Demand Games. Unlimited Swap. No Limits.</p></article>
+          <article class="glass-panel"><small>CLASSIC</small><h3>Classic</h3><p>For Established Hidden Gems. Unlimited Swap with 24h Cooldown, 4 games per week limit.</p></article>
+          <article class="glass-panel"><small>SINGLE</small><h3>Single</h3><p>Any Game, 1 Game. Additional ₱50 for swapping.</p></article>
         </div>
       </section>
 
       <section id="faq" class="info-section page-width compact-section faq-section">
         <p class="eyebrow">GOOD TO KNOW</p>
-        <h2>Frequently asked questions</h2>
+        <h2>Frequently Asked Questions</h2>
         <details class="glass-panel"><summary>What does “Not Available” mean?</summary><p>The slot is currently rented. When provided, the date beside the status is the expected day it becomes available.</p></details>
         <details class="glass-panel"><summary>What is “Awaiting Deactivation”?</summary><p>The rental has ended, but the current renter still needs to complete the account deactivation process before the slot can be released.</p></details>
         <details class="glass-panel"><summary>Why are some games marked “PS5 Only”?</summary><p>Those titles do not have a PS4 version in the JotunDGPH catalog and will be hidden when the PS4 filter is selected.</p></details>
-        <details class="glass-panel"><summary>What does “1 shared slot” mean?</summary><p>The game can be played on PS4 or PS5, but only one Non-Trophy renter can use that shared slot at a time.</p></details>
       </section>
     </main>
 
