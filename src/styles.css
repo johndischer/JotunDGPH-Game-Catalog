@@ -704,3 +704,267 @@ footer { border-top: 1px solid rgba(255, 255, 255, 0.08); background: #090a0b; }
   }
   .slot-action { min-height: 30px; }
 }
+
+/* v10 — compact two-column mobile catalog */
+.mobile-cover-badges,
+.mobile-floating-actions,
+.mobile-availability-summary {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* Keep search useful without turning it into a sticky half-screen toolbar. */
+  .search-panel {
+    position: relative;
+    top: auto;
+    min-height: 46px;
+    grid-template-columns: minmax(0, 1fr) 38px;
+    gap: 5px;
+    padding: 4px;
+    border-radius: 13px;
+  }
+  .search-box {
+    min-height: 38px;
+    padding-inline: 9px;
+  }
+  .search-box input {
+    height: 36px;
+    font-size: 13px;
+  }
+  .sort-box { display: none; }
+  .icon-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+  }
+  .mobile-filter-row {
+    padding-top: 6px;
+  }
+  .catalog-meta {
+    min-height: 36px;
+    padding: 8px 2px 6px;
+  }
+  .catalog-meta #sync-status { display: none; }
+
+  /* Two neat cards per row, inspired by mobile storefront catalogs. */
+  .game-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .game-card {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    border-radius: 15px;
+    background: linear-gradient(155deg, rgba(38, 39, 40, 0.82), rgba(14, 15, 16, 0.96));
+  }
+  .cover-wrap {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    border-bottom: 1px solid rgba(242, 185, 0, 0.18);
+  }
+  .cover-wrap::after {
+    background: linear-gradient(180deg, transparent 58%, rgba(8, 9, 10, 0.72));
+  }
+  .cover-wrap img {
+    object-position: center;
+  }
+
+  .mobile-cover-badges {
+    position: absolute;
+    inset: 8px 8px auto 8px;
+    z-index: 4;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 6px;
+    pointer-events: none;
+  }
+  .mobile-platform-badge,
+  .mobile-initial-rent-badge {
+    min-height: 23px;
+    padding: 4px 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 7px;
+    color: var(--white);
+    background: rgba(16, 17, 18, 0.84);
+    backdrop-filter: blur(10px);
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+  }
+  .mobile-initial-rent-badge {
+    color: var(--gold-hover);
+    border-color: rgba(242, 185, 0, 0.42);
+    background: rgba(66, 51, 5, 0.82);
+  }
+
+  .mobile-floating-actions {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 5;
+    display: grid;
+    gap: 7px;
+  }
+  .mobile-float-action {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+    color: var(--silver);
+    background: rgba(15, 16, 17, 0.86);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.36);
+    text-decoration: none;
+    transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+  }
+  .mobile-float-action svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .mobile-float-message {
+    color: #171400;
+    border-color: rgba(255, 214, 73, 0.56);
+    background: linear-gradient(135deg, var(--gold-pressed), var(--gold-hover));
+  }
+  .mobile-float-waitlist {
+    color: var(--gold-hover);
+    border-color: rgba(242, 185, 0, 0.42);
+    background: rgba(27, 25, 16, 0.9);
+  }
+  .mobile-float-action:active {
+    transform: scale(0.92);
+  }
+  .mobile-float-action[disabled],
+  .mobile-floating-actions > span.mobile-float-action {
+    opacity: 0.38;
+    pointer-events: none;
+  }
+
+  .game-info {
+    min-width: 0;
+    padding: 10px 9px 11px;
+    display: block;
+  }
+  .title-row {
+    display: block;
+    min-height: 42px;
+  }
+  .title-row h2 {
+    min-height: 34px;
+    font-size: clamp(13px, 3.8vw, 15px);
+    line-height: 1.2;
+    -webkit-line-clamp: 2;
+  }
+  .badges,
+  .availability-grid {
+    display: none;
+  }
+
+  .mobile-availability-summary {
+    margin-top: 8px;
+    display: grid;
+    gap: 7px;
+  }
+  .mobile-platform-status {
+    min-width: 0;
+    padding-top: 7px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .mobile-platform-name {
+    margin-bottom: 5px;
+    display: block;
+    color: var(--gold-hover);
+    font-family: Sora, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+  .mobile-slot-statuses {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .mobile-slot-statuses.single-slot {
+    grid-template-columns: 1fr;
+  }
+  .mobile-slot-status {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+  }
+  .mobile-slot-status > span {
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mobile-status {
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    overflow: hidden;
+    color: var(--silver);
+    font-size: 8.5px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1.18;
+    text-overflow: ellipsis;
+  }
+  .mobile-status i {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+  }
+  .mobile-status-available { color: var(--success); }
+  .mobile-status-unavailable { color: var(--warning); }
+  .mobile-status-awaiting-deactivation { color: var(--gold-hover); }
+  .mobile-status-maintenance { color: var(--danger); }
+
+  /* Mobile cards are already compact; use a gentler press animation. */
+  .game-card:hover { transform: none; }
+  .game-card:active { transform: scale(0.985); }
+}
+
+@media (max-width: 380px) {
+  .game-list { gap: 8px; }
+  .game-card { border-radius: 13px; }
+  .game-info { padding: 9px 7px 10px; }
+  .title-row h2 { font-size: 13px; }
+  .mobile-platform-badge,
+  .mobile-initial-rent-badge { padding-inline: 6px; font-size: 8px; }
+  .mobile-float-action { width: 34px; height: 34px; }
+  .mobile-slot-status > span { font-size: 7.5px; }
+  .mobile-status { font-size: 8px; }
+}
+
+@media (max-width: 320px) {
+  .game-list { grid-template-columns: 1fr; }
+}
