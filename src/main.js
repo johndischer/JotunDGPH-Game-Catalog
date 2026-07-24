@@ -9,7 +9,7 @@ const state = {
   lastSync: null,
   filters: { availability: "all", platform: "all", category: "all", slot: "all" },
   search: "",
-  sort: "availability"
+  sort: "title-asc"
 };
 
 const FILTER_GROUPS = [
@@ -448,7 +448,7 @@ function mobileSlotStatus(slot) {
   if (slot.status === "available") return "Available";
   if (slot.status === "unavailable") {
     const date = formatDate(slot.availableDate);
-    return date || "Unavailable";
+    return date ? `Available ${date}` : "Not Available";
   }
   if (slot.status === "awaiting deactivation") return "Pending";
   if (slot.status === "maintenance") return "Maintenance";
@@ -596,7 +596,7 @@ function render() {
   renderFilters(elements.mobileFilters);
   renderPills();
 
-  elements.subtitle.textContent = "Browse games, your next adventure awaits!";
+  elements.subtitle.textContent = "Browse Games, your next adventure awaits, 1 game at a time!";
   elements.resultCount.textContent = `${state.filteredGames.length} game${state.filteredGames.length === 1 ? "" : "s"} found`;
   elements.empty.hidden = state.filteredGames.length > 0;
   elements.list.innerHTML = state.filteredGames.map(gameCard).join("");
@@ -696,6 +696,6 @@ function bindEvents() {
 bindEvents();
 bindNavigation();
 const year = document.querySelector("#copyright-year");
-if (year) year.textContent = new Date().getFullYear();
+if (year) year.textContent = "2013";
 loadGames();
 setInterval(() => loadGames(), SITE_CONFIG.refreshIntervalMs);
